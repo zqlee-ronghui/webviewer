@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>WebViewer</title>
+  <script type="text/javascript" src="js/third_party/dat.gui.min.js"></script>
+  <script type="text/javascript" src="js/third_party/three.min.js"></script>
+  <script type="text/javascript" src="js/third_party/stats.min.js"></script>
+  <script type="text/javascript" src="js/lib/Mouse.js"></script>
+  <script type="text/javascript" src="js/lib/ViewControls.js"></script>
+  <script type="text/javascript" src="js/lib/PointClouds.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    #thumb {
+      position: absolute;
+      top: 0px;
+      left: 15px;
+      background-color: #000;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="thumb" height="150" width="300"></canvas>
+  <div id="Stats-output">
+  </div>
+  <div id="WebGL-output">
+  </div>
+  <script type="text/javascript" src="js/main.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    socket.on("pointcloud", function (msg) {
+      ParasePointCloudMsg(msg);
+    });
+
+    let ctx = document.getElementById('thumb').getContext('2d');
+    socket.on("image", function (msg) {
+      if (msg.image) {
+        let img = new Image();
+        img.src = 'data:image/jpeg;base64,' + msg.buffer;
+        img.onload = function () {
+          ctx.drawImage(img, 0, 0, this.width, this.height, 0, 0, CANVAS_SIZE[0], CANVAS_SIZE[1]);
+        }
+      }
+    });
+
+    window.onload = init;
+    // listen to the resize events
+    window.addEventListener('resize', onResize, false);
+  </script>
+</body>
+
+</html>
