@@ -78,9 +78,9 @@ std::string SerializePointCloud(const pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,
   header.rgb[0] = r;
   header.rgb[1] = g;
   header.rgb[2] = b;
-  header.origin[0] = 1.1f;
-  header.origin[1] = 1.2f;
-  header.origin[2] = 1.3f;
+  header.origin[0] = x;
+  header.origin[1] = y;
+  header.origin[2] = z;
 
   float points[cloud->size() * 3];
   for(int i = 0; i < cloud->size(); ++i) {
