@@ -58,9 +58,9 @@ std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_
 
 std::string SerializePointCloud(const pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,
                                 const std::string frame_id = "",
-                                const int r = 0,
-                                const int g = 0,
-                                const int b = 0,
+                                const unsigned int r = 0,
+                                const unsigned int g = 0,
+                                const unsigned int b = 0,
                                 const float x = 0.0f,
                                 const float y = 0.0f,
                                 const float z = 0.0f) {
@@ -75,9 +75,9 @@ std::string SerializePointCloud(const pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,
     float origin[3];
   } header;
   memcpy(header.frame_id, frame_id.c_str(), frame_id.size() < 8 ? frame_id.size() : 8);
-  header.rgb[0] = 50;
-  header.rgb[1] = 150;
-  header.rgb[2] = 250;
+  header.rgb[0] = r;
+  header.rgb[1] = g;
+  header.rgb[2] = b;
   header.origin[0] = 1.1f;
   header.origin[1] = 1.2f;
   header.origin[2] = 1.3f;
@@ -128,9 +128,9 @@ class Publisher {
 
   void AddPointCloud(const pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,
                      const std::string frame_id = "",
-                     const int r = 255,
-                     const int g = 255,
-                     const int b = 255,
+                     const unsigned int r = 255,
+                     const unsigned int g = 255,
+                     const unsigned int b = 255,
                      const float x = 0.0f,
                      const float y = 0.0f,
                      const float z = 0.0f) {
